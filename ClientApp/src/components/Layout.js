@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import NavBar from "./Widgets/NavBar/NavBar";
 import { Container } from "@material-ui/core";
 import UserGroup from "./Pages/UserGroup/UserGroup";
-
+import MyDrawer from './Widgets/Drawer/Drawer'
+import Bank from "./Pages/Bank/Bank";
 export class Layout extends Component {
   static displayName = Layout.name;
 
@@ -11,9 +12,10 @@ export class Layout extends Component {
       <div>
         <NavBar />
         <div className="uk-grid-small" data-uk-drid>
-          <Container>
-            <UserGroup />
-          </Container>
+            <MyDrawer>
+                    <Bank />
+            </MyDrawer>
+
         </div>
       </div>
     );
