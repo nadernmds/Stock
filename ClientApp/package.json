@@ -8,6 +8,7 @@
     "bootstrap": "^4.3.1",
     "jquery": "3.3.1",
     "jss-rtl": "^0.2.3",
+    "material-table": "^1.40.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-bootstrap": "^0.24.4",

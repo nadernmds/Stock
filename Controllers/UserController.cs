@@ -11,14 +11,39 @@ namespace Stock.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private Stock_dbContext db=new Stock_dbContext();
+        private Stock_dbContext db = new Stock_dbContext();
 
-        public UsersController(Stock_dbContext context)
+       [Route("login")]
+       [HttpPost]
+        public bool Login(string username, string password)
         {
-            db = context;
+            var s = db.Users.FirstOrDefault(c => c.Username == username && c.Password == password);
+            if (s != null)
+            {
+                HttpContext.Session.SetInt32("UUU", s.UserId);
+                return true;
+                }
+            else
+            {
+                return false;
+            }
         }
+        [HttpGet]
+        [Route("check")]
+        public bool isLoggedIn()
+        {
+            if (HttpContext.Session.GetInt32("UUU").HasValue)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         // GET: api/Users
         [HttpGet]

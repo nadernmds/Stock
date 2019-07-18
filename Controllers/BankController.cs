@@ -40,7 +40,8 @@ namespace Stock.Controllers
         // PUT: api/Bank/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBanks(int id, Banks banks)
-        {
+{
+
             if (id != banks.BankId)
             {
                 return BadRequest();

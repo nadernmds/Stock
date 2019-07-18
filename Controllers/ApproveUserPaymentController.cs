@@ -13,13 +13,10 @@ namespace Stock.Controllers
     [ApiController]
     public class ApproveUserPaymentController : ControllerBase
     {
-        private  Stock_dbContext db=new Stock_dbContext();
-
-        public ApproveUserPaymentController(Stock_dbContext context)
+        private Stock_dbContext db = new Stock_dbContext();
+        public ApproveUserPaymentController()
         {
-            db = context;
         }
-
         // GET: api/ApproveUserPayment
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApproveUserPayments>>> GetApproveUserPayments()

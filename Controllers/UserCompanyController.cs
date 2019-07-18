@@ -15,10 +15,7 @@ namespace Stock.Controllers
     {
         private Stock_dbContext db=new Stock_dbContext();
 
-        public UserCompanyController(Stock_dbContext context)
-        {
-            db = context;
-        }
+
 
         // GET: api/UserCompany
         [HttpGet]

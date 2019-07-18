@@ -15,10 +15,7 @@ namespace Stock.Controllers
     {
         private Stock_dbContext db=new Stock_dbContext();
 
-        public CityController(Stock_dbContext context)
-        {
-            db = context;
-        }
+
 
         // GET: api/City
         [HttpGet]

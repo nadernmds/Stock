@@ -11,8 +11,8 @@ import {
   TableCell,
   TableBody
 } from "@material-ui/core";
-class UserGroup extends Component {
-  state = { userGroups: []};
+class Company extends Component {
+  state = { companys: []};
   render() {
     return (
       <div>
@@ -20,11 +20,11 @@ class UserGroup extends Component {
           <Grid container direction="column" xs={4}>
             <form onSubmit={this.onSubmit}>
               <TextField
-                value={this.state.groupName}
+                value={this.state.companyName}
                 onChange={this.onChange}
-                id="groupName"
-                name="groupName"
-                label="گروه کاربری "
+                id="companyName"
+                name="companyName"
+                label="نام شرکت"
                 margin="normal"
               />
               {/* <Button type="submit" variant="outlined">
@@ -41,15 +41,15 @@ class UserGroup extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.userGroups.map(c => (
+              {this.state.companys.map(c => (
                 <TableRow>
-                  <TableCell>{c.groupName}</TableCell>
+                  <TableCell>{c.companyName}</TableCell>
                   <TableCell>
                     <a
                       onClick={() => {
-                        this.Delete(c.userGroupId);
+                        this.Delete(c.companyId);
                       }}
-                      href="javaScript:"
+                      href="#!"
                     >
                       حذف
                     </a>
@@ -67,15 +67,15 @@ class UserGroup extends Component {
   };
 
   getAll = () => {
-    fetch("api/usergroup")
+    fetch("api/Company")
       .then(c => c.json())
-      .then(c => this.setState({ userGroups: c })).then(c=>{console.log(this.state.userGroups)});
+      .then(c => this.setState({ companys: c })).then(c=>{console.log(this.state.companys)});
   };
   componentDidMount() {
     this.getAll();
   }
   Delete = id => {
-    fetch("api/usergroup/" + id, {
+    fetch("api/Company/" + id, {
       method: "delete"
     })
       .then(c => c.json)
@@ -86,14 +86,14 @@ class UserGroup extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const formData = { groupName: this.state.groupName };
+    const formData = { companyName: this.state.companyName };
 
     // for (const data in this.refs) {
     //   // formData[data] = this.refs[data].value;
     //   this.state[data] = this.refs[data].value;
     // }
 
-    fetch("/api/usergroup", {
+    fetch("/api/Company", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -102,9 +102,9 @@ class UserGroup extends Component {
     })
       .then(c => c.json())
       .then(c => {
-        this.setState({ userGroups: [...this.state.userGroups, c], groupName: "" });
+        this.setState({ companys: [...this.state.companys, c], companyName: "" });
       });
   };
 }
 
-export default UserGroup;
+export default Company;

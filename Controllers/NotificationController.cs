@@ -15,10 +15,7 @@ namespace Stock.Controllers
     {
         private Stock_dbContext db=new Stock_dbContext();
 
-        public NotificationController(Stock_dbContext context)
-        {
-            db = context;
-        }
+
 
         // GET: api/Notification
         [HttpGet]

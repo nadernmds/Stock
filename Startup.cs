@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Stock
 {
@@ -13,6 +15,10 @@ namespace Stock
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            using (var db=new Models.Stock_dbContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -21,7 +27,9 @@ namespace Stock
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(60);//You can set Time   
+            });
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -42,10 +50,12 @@ namespace Stock
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseSpaStaticFiles();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

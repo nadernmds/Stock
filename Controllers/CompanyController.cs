@@ -14,16 +14,11 @@ namespace Stock.Controllers
     public class CompanyController : ControllerBase
     {
         private Stock_dbContext db=new Stock_dbContext();
-
-        public CompanyController(Stock_dbContext context)
-        {
-            db = context;
-        }
-
         // GET: api/Company
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Companies>>> GetCompanies()
         {
+            HttpContext.Session.SetString("pep", "pep");
             return await db.Companies.ToListAsync();
         }
 
@@ -32,7 +27,7 @@ namespace Stock.Controllers
         public async Task<ActionResult<Companies>> GetCompanies(int id)
         {
             var companies = await db.Companies.FindAsync(id);
-
+          var w=  HttpContext.Session.GetString("pep");
             if (companies == null)
             {
                 return NotFound();
