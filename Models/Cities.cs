@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Stock.Models
@@ -14,6 +15,7 @@ namespace Stock.Models
         public string CityName { get; set; }
         public int? StateId { get; set; }
 
+        [JsonIgnore]
         public virtual States State { get; set; }
         public virtual ICollection<Users> Users { get; set; }
     }

@@ -21,7 +21,7 @@ namespace Stock.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<States>>> GetStates()
         {
-            return await db.States.ToListAsync();
+            return await db.States.Include(c=> c.Cities).ToListAsync();
         }
 
         // GET: api/State/5

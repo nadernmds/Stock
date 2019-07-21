@@ -15,6 +15,7 @@ import Notification from "./components/Pages/Notification/Notification";
 import State from "./components/Pages/State/State";
 import Login from "./components/Pages/Login/Login";
 import { Divider } from "@material-ui/core";
+import Test from "./components/Pages/Test/Test";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -33,12 +34,12 @@ export default class App extends Component {
           <Route path="/notification" component={Notification} />
           <Route path="/state" component={State} />
           <Route path="/login" component={Login} />
+          <Route path="/test" component={Test} />
+
         </Layout>
       );
     } else {
-      return (
-          <Login />
-      );
+      return <Login />;
     }
   }
 

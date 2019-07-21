@@ -15,10 +15,6 @@ namespace Stock
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            using (var db=new Models.Stock_dbContext())
-            {
-                db.Database.Migrate();
-            }
         }
 
         public IConfiguration Configuration { get; }

@@ -4,7 +4,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 import { StylesProvider, jssPreset, ThemeProvider } from "@material-ui/styles";
 import React, { Component } from "react";
-import { indigo, pink, red } from "@material-ui/core/colors";
+import { indigo, pink, red, green } from "@material-ui/core/colors";
 // Configure JSS
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
