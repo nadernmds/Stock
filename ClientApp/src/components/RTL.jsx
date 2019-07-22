@@ -17,7 +17,7 @@ class RTL extends Component {
     return createMuiTheme({
       direction: "rtl",
       palette: {
-        primary: red,
+        primary: green,
         secondary: pink,
         error: red,
         // Used by `getContrastText()` to maximize the contrast between the background and

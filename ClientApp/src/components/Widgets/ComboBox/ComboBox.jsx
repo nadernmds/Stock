@@ -5,7 +5,7 @@ class ComboBox extends Component {
   state = {};
   render() {
     return (
-      <div>
+      <React.Fragment>
         <InputLabel htmlFor={this.props.name}>{this.props.label}</InputLabel>
         <Select
           onChange={this.props.onChange}
@@ -20,7 +20,7 @@ class ComboBox extends Component {
             <MenuItem value={c.value}>{c.text}</MenuItem>
           ))}
         </Select>
-      </div>
+      </React.Fragment>
     );
   }
 }
