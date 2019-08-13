@@ -6,6 +6,7 @@ import ComboBoxCompany from "../../Widgets/ComboBoxes/ComboBoxCompany";
 import ComboBoxUserGroup from "../../Widgets/ComboBoxes/ComboBoxUserGroup";
 import ComboBoxCity from "../../Widgets/ComboBoxes/ComboBoxCity";
 import Item from "../../Widgets/Item/Item";
+import Api from "../../../Api";
 
 class UserEdit extends Component {
   state = { companyId: "", bankId: "" };
@@ -16,11 +17,7 @@ class UserEdit extends Component {
   onSubmit = e => {
     e.preventDefault();
     const formData = { ...this.state };
-    fetch("/api/user/" + this.props.id, {
-      method: "Put",
-      headers: {
-        "Content-Type": "application/json"
-      },
+ new Api().put("/api/user/" + this.props.id, {
       body: JSON.stringify(formData)
     }).then(c => {
       if (c.ok) {
@@ -34,7 +31,7 @@ class UserEdit extends Component {
     });
   };
   componentDidMount() {
-    fetch("api/user/" + this.props.id)
+ new Api().get("api/user/" + this.props.id)
       .then(c => c.json())
       .then(c => this.setState({ ...c }));
   }

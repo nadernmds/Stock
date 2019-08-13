@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
 import { Layout } from "./components/Layout";
-import { Home } from "./components/Pages/Home";
-import { FetchData } from "./components/FetchData";
-import { Counter } from "./components/Counter";
 import UserGroup from "./components/Pages/UserGroup/UserGroup";
 import User from "./components/Pages/User/User";
 import Bank from "./components/Pages/Bank/Bank";
@@ -16,38 +13,36 @@ import State from "./components/Pages/State/State";
 import Login from "./components/Pages/Login/Login";
 import { Divider } from "@material-ui/core";
 import Test from "./components/Pages/Test/Test";
+import withAuth from "./withAuth";
 
 export default class App extends Component {
-  static displayName = App.name;
-  state = { loggedIn: false };
-  render() {
-    if (this.state.loggedIn) {
-      return (
-        <Layout>
-          <Route exact path="/userGroup" component={UserGroup} />
-          <Route path="/user" component={User} />
-          <Route path="/bank" component={Bank} />
-          <Route path="/faq" component={Faq} />
-          <Route path="/stock" component={Stock} />
-          <Route path="/company" component={Company} />
-          <Route path="/transfer" component={Transfer} />
-          <Route path="/notification" component={Notification} />
-          <Route path="/state" component={State} />
-          <Route path="/login" component={Login} />
-          <Route path="/test" component={Test} />
-
-        </Layout>
-      );
-    } else {
-      return <Login />;
-    }
+  constructor(props) {
+    super(props);
+    this.Path.bind(this);
   }
-
-  componentDidMount() {
-    fetch("api/user/login")
-      .then(c => c.json())
-      .then(c => {
-        this.setState({ loggedIn: c });
-      });
+  static displayName = App.name;
+  state = {};
+  render() {
+    const Path = this.Path;
+    return (
+      <Layout>
+        <Route path="/login" component={Login} />
+        <Path path="/user" component={User} />
+        <Path exact path="/userGroup" component={UserGroup} />
+        <Path path="/bank" component={Bank} />
+        <Path path="/faq" component={Faq} />
+        <Path path="/stock" component={Stock} />
+        <Path path="/company" component={Company} />
+        <Path path="/transfer" component={Transfer} />
+        <Path path="/notification" component={Notification} />
+        <Path path="/state" component={State} />
+        <Path path="/test" component={Test} />
+      </Layout>
+    );
+  }
+  Path(props) {
+    return (
+      <Route exact path={props.path} component={withAuth(props.component)} />
+    );
   }
 }

@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stock.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Stock.Controllers
 {
@@ -14,37 +19,39 @@ namespace Stock.Controllers
     public class UserController : ControllerBase
     {
         private Stock_dbContext db = new Stock_dbContext();
+        private const string SECRET_KEY = "TQvgjeABCDOwCycOqah5EQu5yyVjpmVG";
+        public static readonly SymmetricSecurityKey SigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET_KEY));
 
-       [Route("login")]
-       [HttpPost]
-        public bool Login(string username, string password)
+        [Route("login")]
+        [HttpPost]
+        public IActionResult Login(Users user)
         {
-            var s = db.Users.FirstOrDefault(c => c.Username == username && c.Password == password);
+            var s = db.Users.FirstOrDefault(c => c.Username == user.Username && c.Password == user.Password);
+
             if (s != null)
             {
-                HttpContext.Session.SetInt32("UUU", s.UserId);
-                return true;
-                }
+                return new JsonResult(GenerateToken(s));
+            }
             else
             {
-                return false;
+                return StatusCode(402);
             }
         }
-        [HttpGet]
-        [Route("check")]
-        public bool isLoggedIn()
+
+
+        private string GenerateToken(Users user)
         {
-            if (HttpContext.Session.GetInt32("UUU").HasValue)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            var token = new JwtSecurityToken(
+                claims: new Claim[] {
+                    new Claim(ClaimTypes.Name,user.UserId.ToString())
+                },
+                notBefore: new DateTimeOffset(DateTime.Now).DateTime,
+                expires: new DateTimeOffset(DateTime.Now.AddMinutes(30)).DateTime,
+                signingCredentials: new SigningCredentials(SigningKey, SecurityAlgorithms.HmacSha256)
+                );
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
         }
-
-
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Users>>> GetUsers()

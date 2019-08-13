@@ -14,13 +14,11 @@ namespace Stock.Controllers
     public class FaqController : ControllerBase
     {
         private Stock_dbContext db=new Stock_dbContext();
-
-
-
         // GET: api/Faq
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Faqs>>> GetFaqs()
         {
+            
             return await db.Faqs.ToListAsync();
         }
 

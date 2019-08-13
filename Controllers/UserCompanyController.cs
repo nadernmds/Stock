@@ -6,17 +6,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stock.Models;
-
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 namespace Stock.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UserCompanyController : ControllerBase
     {
-        private Stock_dbContext db=new Stock_dbContext();
-
-
-
+        Models.Stock_dbContext db = new Stock_dbContext();
         // GET: api/UserCompany
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserCompanies>>> GetUserCompanies()

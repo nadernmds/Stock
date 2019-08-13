@@ -10,6 +10,7 @@ import {
   Grid
 } from "@material-ui/core";
 import UserEdit from "./UserEdit";
+import Api from "../../../Api";
 
 class User extends Component {
   state = { users: [] };
@@ -77,13 +78,13 @@ class User extends Component {
     this.setState({ ...this.state.users });
   };
   componentDidMount() {
-    fetch("api/user")
+ new Api().get("api/user")
       .then(c => c.json())
       .then(c => this.setState({ users: c }));
   }
 
   Delete = id => {
-    fetch("api/user/" + id, {
+   new Api().delete("api/user/" + id, {
       method: "delete"
     })
       .then(c => c.json())

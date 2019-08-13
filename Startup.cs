@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 
 namespace Stock
@@ -31,6 +32,22 @@ namespace Stock
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            services.AddAuthentication(c =>
+            {
+                c.DefaultAuthenticateScheme = "JwtBearer";
+                c.DefaultChallengeScheme = "JwtBearer";
+            }).AddJwtBearer("JwtBearer", c =>
+            {
+
+                c.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = Controllers.UserController.SigningKey,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(5)
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +69,7 @@ namespace Stock
 
             app.UseSpaStaticFiles();
             app.UseSession();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

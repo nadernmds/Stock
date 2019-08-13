@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid, TextField, Paper, Card, Box, Button } from "@material-ui/core";
 import BaseTable from "./BaseTable";
+import Api from "../../../Api";
 class Table extends Component {
   state = {
     EditMode: false
@@ -117,11 +118,7 @@ class Table extends Component {
     for (let i = 0; i < keys.length; i++) {
       formData[keys[i]] = this.state[keys[i]];
     }
-    fetch(this.props.url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+   new Api().post(this.props.url, {
       body: JSON.stringify(formData)
     })
       .then(c => c.json())
@@ -156,7 +153,7 @@ class Table extends Component {
     for (let i = 0; i < keys.length; i++) {
       formData[keys[i]] = this.state.EditData[keys[i]];
     }
-    fetch(this.props.url + "/" + id, {
+  new Api().put(this.props.url + "/" + id, {
       method: "put",
       headers: {
         "Content-Type": "application/json"
@@ -182,7 +179,7 @@ class Table extends Component {
       });
   };
   componentDidMount() {
-    fetch(this.props.url)
+  new Api().get(this.props.url)
       .then(c => c.json())
       .then(c => this.setState({ data: c }));
   }

@@ -17,6 +17,7 @@ import ComboBoxCompany from "../../Widgets/ComboBoxes/ComboBoxCompany";
 import ComboBoxUserGroup from "../../Widgets/ComboBoxes/ComboBoxUserGroup";
 import ComboBoxCity from "../../Widgets/ComboBoxes/ComboBoxCity";
 import Item from "../../Widgets/Item/Item";
+import Api from "../../../Api";
 
 class UserCreate extends Component {
   state = { companyId: "", bankId: "" };
@@ -27,8 +28,7 @@ class UserCreate extends Component {
   onSubmit = e => {
     e.preventDefault();
     const formData = { ...this.state };
-    console.log(formData);
-    fetch("/api/user", {
+   new Api().post("/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
