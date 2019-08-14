@@ -1,22 +1,17 @@
 import React, { Component } from "react";
 import ApiTable from "../../Widgets/Table/ApiTable";
 class Stock extends Component {
-
   state = {
     columns: [
+      { title: "عنوان", field: "title" },
       { title: "قیمت واحد", field: "pricePerUnit" },
-      { title: "تعداد", field: "count" },
+      { title: "تعداد", field: "count" }
     ]
   };
   render() {
-
     return (
       <div>
-        <ApiTable
-          title="سهام "
-          columns={this.state.columns}
-          url="api/Stock/"
-        />
+        <ApiTable title="سهام " columns={this.state.columns} url="api/Stock/" />
       </div>
     );
   }

@@ -14,6 +14,7 @@ import Login from "./components/Pages/Login/Login";
 import { Divider } from "@material-ui/core";
 import Test from "./components/Pages/Test/Test";
 import withAuth from "./withAuth";
+import InstallmentTemplate from "./components/Pages/InstallmentTemplate/InstallmentTemplate";
 
 export default class App extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ export default class App extends Component {
         <Path path="/transfer" component={Transfer} />
         <Path path="/notification" component={Notification} />
         <Path path="/state" component={State} />
+        <Path path="/installment" component={InstallmentTemplate} />
         <Path path="/test" component={Test} />
       </Layout>
     );

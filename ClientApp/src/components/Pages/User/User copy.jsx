@@ -23,8 +23,7 @@ class User extends Component {
     { field: "bankAccount", title: "شماره حساب بانک" },
     { field: "shebaCode", title: "کد شبا" },
     { field: "bankBranch", title: "کد شعبه" },
-    { field: "mail", title: "ایمیل" },
-
+    { field: "mail", title: "ایمیل" }
   ];
   render() {
     return (

@@ -12,20 +12,26 @@ class Table extends Component {
     return (
       <div>
         {!this.state.EditMode ? (
-          <Card style={{maxWidth:window.innerWidth, padding: 30 }}>
+          <Card style={{ maxWidth: window.innerWidth, padding: 30 }}>
             <form onSubmit={this.onSubmit}>
               <Grid container>
                 {this.names.map(c => (
                   <Grid item md={6}>
                     <Box width={3 / 4}>
-                      <TextField                         
+                      <TextField
                         autoComplete={false}
                         value={this.state[c.name]}
                         onChange={this.onChange}
                         fullWidth
                         label={c.persianName}
                         name={c.name}
-                        type={c.type=='number'?'number':(c.type=='password'?'password':'text')}
+                        type={
+                          c.type == "number"
+                            ? "number"
+                            : c.type == "password"
+                            ? "password"
+                            : "text"
+                        }
                       />
                     </Box>
                   </Grid>
@@ -118,9 +124,10 @@ class Table extends Component {
     for (let i = 0; i < keys.length; i++) {
       formData[keys[i]] = this.state[keys[i]];
     }
-   new Api().post(this.props.url, {
-      body: JSON.stringify(formData)
-    })
+    new Api()
+      .post(this.props.url, {
+        body: JSON.stringify(formData)
+      })
       .then(c => c.json())
       .then(c => {
         for (const key in formData) {
@@ -153,13 +160,14 @@ class Table extends Component {
     for (let i = 0; i < keys.length; i++) {
       formData[keys[i]] = this.state.EditData[keys[i]];
     }
-  new Api().put(this.props.url + "/" + id, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    })
+    new Api()
+      .put(this.props.url + "/" + id, {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
       .then(c => {
         if (c.ok) {
           var prevState = [...this.state.data];
@@ -179,7 +187,8 @@ class Table extends Component {
       });
   };
   componentDidMount() {
-  new Api().get(this.props.url)
+    new Api()
+      .get(this.props.url)
       .then(c => c.json())
       .then(c => this.setState({ data: c }));
   }

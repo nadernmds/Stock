@@ -11,10 +11,10 @@ namespace Stock.Models
         }
 
         public int StockId { get; set; }
+        public string title { get; set; }
         public decimal? PricePerUnit { get; set; }
         public int? Count { get; set; }
         public int? CompanyId { get; set; }
-
         public virtual Companies Company { get; set; }
         public virtual ICollection<StockAllocations> StockAllocations { get; set; }
     }

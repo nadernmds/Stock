@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stock.Models;
+using pep;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Stock.Controllers
 {
@@ -13,22 +15,57 @@ namespace Stock.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private Stock_dbContext db=new Stock_dbContext();
+        private Stock_dbContext db = new Stock_dbContext();
 
 
+
+
+        //public async Task<IEnumerable<Payments>> GeneratePayments(int id)
+        //{
+
+        //}
 
         // GET: api/Payment
-        [HttpGet]
+        [HttpGet,Authorize]
         public async Task<ActionResult<IEnumerable<Payments>>> GetPayments()
         {
+            var s = await db.InstalmentTemplates.FindAsync(1);
+            var startdate = s.FromDate.Value.ToPersianDateShortString().Substring(0, 8) + "01";
+            var aghsatStartDate = startdate.toMiladiDate().AddDays(Convert.ToInt32(s.Payday)-1);
+            var sDate = s.FromDate.Value;
+            int count = s.Count.Value;
+            while (count>0)
+            {
+                if (aghsatStartDate < s.FromDate)
+                {
+                    continue;
+                }
+                else
+                {
+                    db.Payments.Add(new Payments()
+                    {
+                        Date= aghsatStartDate,Amount=s.Amount,Title="قسط شماره ",UserId=Convert.ToInt32( User.Identity.Name)
+
+                    });
+                    var ww = aghsatStartDate.AddDays(30).toPersianDateString();
+                
+                }
+                count--;                    aghsatStartDate = aghsatStartDate.AddDays(30);
+
+            }
+            db.SaveChanges();
+            if (aghsatStartDate > s.FromDate)
+            {
+
+            }
             return await db.Payments.ToListAsync();
         }
 
         // GET: api/Payment/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Payments>> GetPayments(long id)
+        public async Task<ActionResult<IEnumerable<Payments>>> GetPaymentsAsync(int id)
         {
-            var payments = await db.Payments.FindAsync(id);
+            var payments = await db.Payments.Where(c => c.UserId == id).ToListAsync();
 
             if (payments == null)
             {

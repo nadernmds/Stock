@@ -18,6 +18,7 @@ export default class Api {
       "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
     ];
   }
+
   get(url, options) {
     options = {
       ...options,
@@ -26,12 +27,12 @@ export default class Api {
         Authorization: "Bearer " + this._getToken()
       }
     };
-    console.log(options);
     return fetch(url, options);
   }
   post(url, options) {
     options = {
       ...options,
+      method: "post",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + this._getToken()
@@ -42,6 +43,7 @@ export default class Api {
   put(url, options) {
     options = {
       ...options,
+      method: "put",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + this._getToken()
@@ -52,6 +54,7 @@ export default class Api {
   delete(url, options) {
     options = {
       ...options,
+      method: "delete",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + this._getToken()

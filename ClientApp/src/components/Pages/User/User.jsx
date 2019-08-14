@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import UserEdit from "./UserEdit";
 import Api from "../../../Api";
+import ManageInstalment from "./ManageInstalment";
 
 class User extends Component {
   state = { users: [] };
@@ -20,7 +21,7 @@ class User extends Component {
         <UserCreate
           update={c => {
             this.state.users.push(c);
-            this.setState({...this.state.users});
+            this.setState({ ...this.state.users });
           }}
         />
         <Table>
@@ -48,6 +49,9 @@ class User extends Component {
                         }}
                         id={c.userId}
                       />
+                    </Grid>
+                    <Grid item>
+                      <ManageInstalment id={c.userId} />
                     </Grid>
                     <Grid item>
                       <Button
@@ -78,15 +82,17 @@ class User extends Component {
     this.setState({ ...this.state.users });
   };
   componentDidMount() {
- new Api().get("api/user")
+    new Api()
+      .get("api/user")
       .then(c => c.json())
       .then(c => this.setState({ users: c }));
   }
 
   Delete = id => {
-   new Api().delete("api/user/" + id, {
-      method: "delete"
-    })
+    new Api()
+      .delete("api/user/" + id, {
+        method: "delete"
+      })
       .then(c => c.json())
       .then(c => {
         const oldDate = this.state.users.filter(w => w.userId == c)[0];
