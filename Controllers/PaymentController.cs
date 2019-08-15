@@ -13,28 +13,20 @@ namespace Stock.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PaymentController : ControllerBase
     {
         private Stock_dbContext db = new Stock_dbContext();
-
-
-
-
-        //public async Task<IEnumerable<Payments>> GeneratePayments(int id)
-        //{
-
-        //}
-
-        // GET: api/Payment
-        [HttpGet,Authorize]
-        public async Task<ActionResult<IEnumerable<Payments>>> GetPayments()
+        [HttpPost]
+        [Route("generatePayment/{id}")]
+        public async Task<IEnumerable<Payments>> GeneratePayments(int id)
         {
-            var s = await db.InstalmentTemplates.FindAsync(1);
+            var s = await db.InstalmentTemplates.FindAsync(id);
             var startdate = s.FromDate.Value.ToPersianDateShortString().Substring(0, 8) + "01";
-            var aghsatStartDate = startdate.toMiladiDate().AddDays(Convert.ToInt32(s.Payday)-1);
+            var aghsatStartDate = startdate.toMiladiDate().AddDays(Convert.ToInt32(s.Payday) - 1);
             var sDate = s.FromDate.Value;
             int count = s.Count.Value;
-            while (count>0)
+            while (count > 0)
             {
                 if (aghsatStartDate < s.FromDate)
                 {
@@ -44,20 +36,45 @@ namespace Stock.Controllers
                 {
                     db.Payments.Add(new Payments()
                     {
-                        Date= aghsatStartDate,Amount=s.Amount,Title="قسط شماره ",UserId=Convert.ToInt32( User.Identity.Name)
+                        PaymentTypeId = 1,
+                        Date = aghsatStartDate,
+                        Amount = s.Amount,
+                        Title = s.Title+" - " + aghsatStartDate.ToPersianDateShortString().Substring(5,2).toMonthString() +" ماه",
+                        UserId = User.Identity.Name.toInt()
 
                     });
-                    var ww = aghsatStartDate.AddDays(30).toPersianDateString();
-                
+
                 }
-                count--;                    aghsatStartDate = aghsatStartDate.AddDays(30);
+                count--;
+                aghsatStartDate = aghsatStartDate.AddDays(30);
 
             }
             db.SaveChanges();
-            if (aghsatStartDate > s.FromDate)
+            return db.Payments.Where(c => c.UserId == User.Identity.Name.toInt());
+        }
+        [HttpPost]
+        [Route("Verify/{id}")]
+        public async Task<bool> Verify(long id)
+        {
+            try
+            {
+                var item = await db.Payments.FindAsync(id);
+                item.verified = true;
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
             {
 
+                return false;
             }
+
+        }
+        // GET: api/Payment
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Payments>>> GetPayments()
+        {
+
             return await db.Payments.ToListAsync();
         }
 
@@ -65,7 +82,7 @@ namespace Stock.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Payments>>> GetPaymentsAsync(int id)
         {
-            var payments = await db.Payments.Where(c => c.UserId == id).ToListAsync();
+            var payments = await db.Payments.Where(c => c.UserId == id).Include(c => c.PaymentType).ToListAsync();
 
             if (payments == null)
             {
@@ -109,6 +126,8 @@ namespace Stock.Controllers
         [HttpPost]
         public async Task<ActionResult<Payments>> PostPayments(Payments payments)
         {
+            payments.UserId = User.Identity.Name.toInt();
+            payments.PaymentTypeId = 2;
             db.Payments.Add(payments);
             await db.SaveChangesAsync();
 

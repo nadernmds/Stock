@@ -20,6 +20,7 @@ namespace Stock.Models
         public int? InstalmentTemplateId { get; set; }
         public long? StockAllocationId { get; set; }
         public int? PaymentTypeId { get; set; }
+        public bool? verified { get; set; }
 
         public virtual CostAndBenefits CostAndBenefit { get; set; }
         public virtual InstalmentTemplates InstalmentTemplate { get; set; }

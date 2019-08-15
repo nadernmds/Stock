@@ -7,7 +7,7 @@ export default class AuthService {
     this.getProfile = this.getProfile.bind(this);
     this.getUsername = this.getUsername.bind(this);
   }
-  tokenName = "asdfkjlsdjflasjfodkljaghsjguyugjwqeqweqegjhgkjasdghjgjfjdkgfjhdgfdfjh";
+  tokenName = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9";
   login(username, password) {
     // Get a token from api server using the fetch api
     return this.fetch("api/user/login", {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Stock.Models
@@ -12,7 +13,7 @@ namespace Stock.Models
 
         public int PaymentTypeId { get; set; }
         public string Type { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Payments> Payments { get; set; }
     }
 }

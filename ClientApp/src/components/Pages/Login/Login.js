@@ -78,10 +78,11 @@ class Login extends Component {
               id="password"
               autoComplete="current-password"
             />
+            {/* 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="مرابه خاطر بسپار"
-            />
+              label="مرابه خاطر بسپار"/>
+             */}
             <Button
               type="submit"
               fullWidth
@@ -91,7 +92,8 @@ class Login extends Component {
             >
               ورود
             </Button>
-            <Grid container>
+            {
+              /* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   کلمه عبورم را فراموش کرده ام
@@ -102,7 +104,8 @@ class Login extends Component {
                   {"ثبت نام"}
                 </Link>
               </Grid>
-            </Grid>
+            </Grid> */
+            }
           </form>
         </div>
       </Container>
@@ -113,7 +116,6 @@ class Login extends Component {
     new AuthService()
       .login(this.state.username, this.state.password)
       .then(() => {
-        console.log('yess')
         this.props.history.replace("/");
       })
       .catch(() => {

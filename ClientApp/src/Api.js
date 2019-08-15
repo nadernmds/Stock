@@ -7,7 +7,7 @@ export default class Api {
     this.delete.bind(this);
     this.getUserId.bind(this);
   }
-  tokenName = "asdfkjlsdjflasjfodkljaghsjguyugjgjhgkjasdghjgjfjdkgfjhdgfdfjh";
+  tokenName = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9";
   _getToken = () => {
     // Retrieves the user token from localStorage
     return localStorage.getItem(this.tokenName);
