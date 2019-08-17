@@ -12,18 +12,23 @@ import {
 import UserEdit from "./UserEdit";
 import Api from "../../../Api";
 import ManageInstalment from "./ManageInstalment";
+import Summary from "./Summary";
 
 class User extends Component {
   state = { users: [] };
   render() {
     return (
       <div>
+
         <UserCreate
           update={c => {
             this.state.users.push(c);
             this.setState({ ...this.state.users });
           }}
-        />
+        /> 
+
+
+
         <Table>
           <TableHead>
             <TableRow>

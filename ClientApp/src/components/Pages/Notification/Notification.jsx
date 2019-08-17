@@ -8,7 +8,7 @@ class Notification extends Component {
       <div>
         <Table
           url="api/notification"
-          title='اطلاعیه ها'
+          title="اطلاعیه ها"
           columns={this.columns}
           primaryKey="notificationId"
         />

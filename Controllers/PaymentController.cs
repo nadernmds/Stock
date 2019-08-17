@@ -18,6 +18,33 @@ namespace Stock.Controllers
     {
         private Stock_dbContext db = new Stock_dbContext();
         [HttpPost]
+        [Route("getSummary/{id}")]
+        public IActionResult getSummary(int id)
+        {
+            var dept = db.Payments
+                .Where(c => c.UserId == id && c.PaymentTypeId == 1)
+                .Sum(c => c.Amount);
+            var credit = db.Payments
+                .Where(c => c.UserId == id && c.PaymentTypeId == 2 && c.verified == true)
+                .Sum(c => c.Amount);
+            var sum = db.Payments
+                .Where(c => c.UserId == id && (c.verified ?? false) == true && c.Date <= DateTime.Now)
+                .Sum(c => c.PaymentTypeId == 1 ? -1 * c.Amount : c.Amount);
+            var fullSum = db.Payments
+                 .Where(c => c.UserId == id && (c.verified ?? false) == true && (c.PaymentTypeId == 2 ? c.Date <= DateTime.Now : true))
+                 .Sum(c => c.PaymentTypeId == 1 ? -1 * c.Amount : c.Amount);
+            var s =
+           new
+           {
+               dept,
+               credit,
+               sum,
+               fullSum
+           };
+            return Ok(s);
+        }
+
+        [HttpPost]
         [Route("generatePayment/{id}")]
         public async Task<IEnumerable<Payments>> GeneratePayments(int id)
         {
@@ -28,18 +55,14 @@ namespace Stock.Controllers
             int count = s.Count.Value;
             while (count > 0)
             {
-                if (aghsatStartDate < s.FromDate)
-                {
-                    continue;
-                }
-                else
+                if (aghsatStartDate > s.FromDate)
                 {
                     db.Payments.Add(new Payments()
                     {
                         PaymentTypeId = 1,
                         Date = aghsatStartDate,
                         Amount = s.Amount,
-                        Title = s.Title+" - " + aghsatStartDate.ToPersianDateShortString().Substring(5,2).toMonthString() +" ماه",
+                        Title = s.Title + " - " + aghsatStartDate.ToPersianDateShortString().Substring(5, 2).toMonthString() + " ماه",
                         UserId = User.Identity.Name.toInt()
 
                     });
@@ -63,9 +86,8 @@ namespace Stock.Controllers
                 await db.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
                 return false;
             }
 
@@ -124,7 +146,7 @@ namespace Stock.Controllers
 
         // POST: api/Payment
         [HttpPost]
-        public async Task<ActionResult<Payments>> PostPayments(Payments payments)
+        public async Task<ActionResult<Payments>> PostPayments( Payments payments)
         {
             payments.UserId = User.Identity.Name.toInt();
             payments.PaymentTypeId = 2;

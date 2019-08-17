@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Route } from "react-router";
 import { Layout } from "./components/Layout";
 import UserGroup from "./components/Pages/UserGroup/UserGroup";
@@ -15,6 +15,7 @@ import { Divider } from "@material-ui/core";
 import Test from "./components/Pages/Test/Test";
 import withAuth from "./withAuth";
 import InstallmentTemplate from "./components/Pages/InstallmentTemplate/InstallmentTemplate";
+import AuthService from "./AuthService";
 
 export default class App extends Component {
   constructor(props) {
@@ -23,6 +24,9 @@ export default class App extends Component {
   }
   static displayName = App.name;
   state = {};
+  // render(){
+  //   return ( <div>pep</div>);
+  // }
   render() {
     const Path = this.Path;
     return (

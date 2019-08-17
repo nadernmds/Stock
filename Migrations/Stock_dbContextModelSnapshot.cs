@@ -284,6 +284,8 @@ namespace Stock.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnName("userID");
 
+                    b.Property<bool?>("verified");
+
                     b.HasKey("PaymentId");
 
                     b.HasIndex("CostAndBenefitId");

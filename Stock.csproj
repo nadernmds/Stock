@@ -31,8 +31,7 @@
 
   <ItemGroup>
     <Reference Include="PepDateTime">
-      <HintPath>\\127.0.0.1\Share\public\PepDateTime.dll</HintPath>
-      <Private>true</Private>
+      <HintPath>G:\PepSrc\JavidHunterapi\JavidHunter\bin\PepDateTime.dll</HintPath>
     </Reference>
   </ItemGroup>
 

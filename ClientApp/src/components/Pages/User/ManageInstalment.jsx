@@ -18,6 +18,7 @@ import Api from "../../../Api";
 import MaterialTable from "material-table";
 import FormDialog from "../../Widgets/FormDialog/FormDialog";
 import BillPayment from "./BillPayment";
+import Summary from "./Summary";
 class ManageInstalment extends Component {
   state = {
     items: [],
@@ -28,6 +29,7 @@ class ManageInstalment extends Component {
     { title: "میزان مبلغ", field: "amount" },
     { title: "شماره فیش", field: "billcode" }
   ];
+
   render() {
     return (
       <div>
@@ -36,23 +38,30 @@ class ManageInstalment extends Component {
             <br />
             <br />
             <Paper style={{ padding: 20 }}>
-              <div style={{ padding: 20 }}> تعریف اقساط</div>
-              {this.state.items.map(c => (
-                <Button
-                  style={{ marginRight: 5 }}
-                  onClick={() => {
-                    this.onSubcribe(c.instalmentTemplateId);
-                  }}
-                  color="primary"
-                  variant="contained"
-                >
-                  {c.title}
-                </Button>
-              ))}
+              <Grid container>
+                <Grid item md={6}>
+                  <div style={{ padding: 20 }}> تعریف اقساط</div>
+                  {this.state.items.map(c => (
+                    <Button
+                      style={{ marginRight: 5 }}
+                      onClick={() => {
+                        this.onSubcribe(c.instalmentTemplateId);
+                      }}
+                      color="primary"
+                      variant="contained"
+                    >
+                      {c.title}
+                    </Button>
+                  ))}
+                </Grid>
+                <Grid item md={6}>
+                  <Summary  id={this.props.id} />
+                </Grid>
+              </Grid>
             </Paper>
             <Grid container>
               <Grid md={6} item>
-                <Paper>
+                <Paper style={{padding:20}}>
                   <Typography align="center">بدهکار</Typography>
                   <br />
                   <br />
@@ -81,7 +90,7 @@ class ManageInstalment extends Component {
                 </Paper>
               </Grid>
               <Grid md={6} item>
-                <Paper>
+                <Paper style={{padding:20}}>
                   <Typography align="center">بستانکار</Typography>
                   <BillPayment
                     updateleft={c => {

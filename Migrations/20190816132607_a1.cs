@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Stock.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class a1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -132,6 +132,7 @@ namespace Stock.Migrations
                 {
                     stockID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    title = table.Column<string>(nullable: true),
                     pricePerUnit = table.Column<decimal>(type: "decimal(18, 0)", nullable: true),
                     count = table.Column<int>(nullable: true),
                     companyID = table.Column<int>(nullable: true)
@@ -370,7 +371,8 @@ namespace Stock.Migrations
                     costAndBenefitID = table.Column<int>(nullable: true),
                     instalmentTemplateID = table.Column<int>(nullable: true),
                     stockAllocationID = table.Column<long>(nullable: true),
-                    paymentTypeID = table.Column<int>(nullable: true)
+                    paymentTypeID = table.Column<int>(nullable: true),
+                    verified = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {

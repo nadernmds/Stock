@@ -10,8 +10,8 @@ using Stock.Models;
 namespace Stock.Migrations
 {
     [DbContext(typeof(Stock_dbContext))]
-    [Migration("20190717055150_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20190816132607_a1")]
+    partial class a1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -286,6 +286,8 @@ namespace Stock.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnName("userID");
 
+                    b.Property<bool?>("verified");
+
                     b.HasKey("PaymentId");
 
                     b.HasIndex("CostAndBenefitId");
@@ -363,6 +365,8 @@ namespace Stock.Migrations
                     b.Property<decimal?>("PricePerUnit")
                         .HasColumnName("pricePerUnit")
                         .HasColumnType("decimal(18, 0)");
+
+                    b.Property<string>("title");
 
                     b.HasKey("StockId");
 
