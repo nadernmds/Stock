@@ -28,7 +28,7 @@ namespace Stock.Models
         public string Address { get; set; }
         public string PostalCode { get; set; }
         public DateTime? BirthDate { get; set; }
-        public DateTime? BirthPlace { get; set; }
+        public string BirthPlace { get; set; }
         public string Representor { get; set; }
         public string BankBranchCode { get; set; }
         public string NationalCode { get; set; }

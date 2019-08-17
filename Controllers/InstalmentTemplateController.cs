@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using pep;
 using Stock.Models;
 
 namespace Stock.Controllers
@@ -13,15 +14,28 @@ namespace Stock.Controllers
     [ApiController]
     public class InstalmentTemplateController : ControllerBase
     {
-        private Stock_dbContext db=new Stock_dbContext();
+        private Stock_dbContext db = new Stock_dbContext();
 
 
 
         // GET: api/InstalmentTemplate
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<InstalmentTemplates>>> GetInstalmentTemplates()
+        public async Task<ActionResult<IEnumerable<object>>> GetInstalmentTemplates()
         {
-            return await db.InstalmentTemplates.ToListAsync();
+            var s = db.InstalmentTemplates.Select(c => new
+            {
+                c.Title,
+                FromDate=  c.FromDate.Value.ToPersianDateShortString(),
+                ToDate=  c.ToDate.Value.ToPersianDateShortString(),
+                c.Count,
+                c.Payday,
+                c.Amount,
+                c.Company,
+                c.CompanyId,
+                c.InstalmentTemplateId
+            });
+
+            return await s.ToListAsync();
         }
 
         // GET: api/InstalmentTemplate/5

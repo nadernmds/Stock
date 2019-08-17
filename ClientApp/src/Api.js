@@ -1,4 +1,5 @@
 import decode from "jwt-decode";
+import PersianDate from "persian-date";
 export default class Api {
   constructor() {
     this.get.bind(this);
@@ -6,6 +7,8 @@ export default class Api {
     this.put.bind(this);
     this.delete.bind(this);
     this.getUserId.bind(this);
+    this.toPersainDate.bind(this);
+    this.toMiladiDate.bind(this);
   }
   tokenName = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9";
   _getToken = () => {
@@ -17,6 +20,24 @@ export default class Api {
     return decoded[
       "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
     ];
+  }
+  toPersainDate(miladi) {
+    const a = new Date(miladi);
+    let persianDate = new PersianDate(a);
+    // persianDate.toCalendar('persian');
+    return persianDate.format("YYYY-MM-DD");
+  }
+  toMiladiDate(shamsi) {
+    console.log(shamsi);
+    if (shamsi.length == 10) {
+      var d = new Date(shamsi);
+      let persianDate = new PersianDate([
+        d.getFullYear(),
+        d.getMonth() + 1,
+        d.getDate()
+      ]).toCalendar("gregorian").toLocale('en');
+      return persianDate.format("YYYY-MM-DD");
+    }
   }
 
   get(url, options) {

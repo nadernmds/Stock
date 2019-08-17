@@ -55,13 +55,13 @@ class ManageInstalment extends Component {
                   ))}
                 </Grid>
                 <Grid item md={6}>
-                  <Summary  id={this.props.id} />
+                  <Summary id={this.props.id} />
                 </Grid>
               </Grid>
             </Paper>
             <Grid container>
               <Grid md={6} item>
-                <Paper style={{padding:20}}>
+                <Paper style={{ padding: 20 }}>
                   <Typography align="center">بدهکار</Typography>
                   <br />
                   <br />
@@ -71,7 +71,7 @@ class ManageInstalment extends Component {
                         <TableCell>عنوان</TableCell>
                         <TableCell>تاریخ</TableCell>
                         <TableCell>مقدار</TableCell>
-                        <TableCell>شماره فیش پرداختی</TableCell>
+                        {/* <TableCell>شماره فیش پرداختی</TableCell> */}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -80,9 +80,11 @@ class ManageInstalment extends Component {
                         .map(c => (
                           <TableRow>
                             <TableCell>{c.title}</TableCell>
-                            <TableCell>{c.date}</TableCell>
+                            <TableCell>
+                              {new Api().toPersainDate(c.date)}
+                            </TableCell>
                             <TableCell>{c.amount}</TableCell>
-                            <TableCell>{c.billCode}</TableCell>
+                            {/* <TableCell>{c.billCode}</TableCell> */}
                           </TableRow>
                         ))}
                     </TableBody>
@@ -90,7 +92,7 @@ class ManageInstalment extends Component {
                 </Paper>
               </Grid>
               <Grid md={6} item>
-                <Paper style={{padding:20}}>
+                <Paper style={{ padding: 20 }}>
                   <Typography align="center">بستانکار</Typography>
                   <BillPayment
                     updateleft={c => {
@@ -114,7 +116,11 @@ class ManageInstalment extends Component {
                         .map((c, index) => (
                           <TableRow>
                             <TableCell>{c.title}</TableCell>
-                            <TableCell>{c.date}</TableCell>
+                            <TableCell>
+                              {c.date != null
+                                ? new Api().toPersainDate(c.date)
+                                : ""}
+                            </TableCell>
                             <TableCell>{c.amount}</TableCell>
                             <TableCell>{c.billCode}</TableCell>
                             <TableCell>

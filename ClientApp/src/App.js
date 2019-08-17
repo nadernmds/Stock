@@ -16,7 +16,7 @@ import Test from "./components/Pages/Test/Test";
 import withAuth from "./withAuth";
 import InstallmentTemplate from "./components/Pages/InstallmentTemplate/InstallmentTemplate";
 import AuthService from "./AuthService";
-
+import Api from "./Api";
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +28,7 @@ export default class App extends Component {
   //   return ( <div>pep</div>);
   // }
   render() {
+
     const Path = this.Path;
     return (
       <Layout>

@@ -40,8 +40,10 @@ namespace Stock.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseLazyLoadingProxies(false)
-                                    // .UseSqlServer("Data Source=.;Initial Catalog=stock_db;Persist Security Info=True;User ID=sa;Password=1371");
-                                 .UseSqlServer("Data Source=185.165.116.34,1436;Initial Catalog=Stock;Persist Security Info=True;User ID=stock;Password=rzk123!@#");
+                                     //.UseSqlServer("Data Source=.;Initial Catalog=stock_db;Persist Security Info=True;User ID=sa;Password=1371");
+                                                                 .UseSqlServer("Data Source=192.168.1.213;Initial Catalog=stock_db;Persist Security Info=True;User ID=sa;Password=rzk123");
+
+                //.UseSqlServer("Data Source=185.165.116.34,1436;Initial Catalog=Stock;Persist Security Info=True;User ID=stock;Password=rzk123!@#");
 
             }
         }
@@ -435,7 +437,7 @@ namespace Stock.Models
 
                 entity.Property(e => e.BirthPlace)
                     .HasColumnName("birthPlace")
-                    .HasColumnType("date");
+                    .HasColumnType("nvarchar(50)");
 
                 entity.Property(e => e.CityId).HasColumnName("cityID");
 

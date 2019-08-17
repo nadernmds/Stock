@@ -17,25 +17,30 @@ class UserEdit extends Component {
   onSubmit = e => {
     e.preventDefault();
     const formData = { ...this.state };
- new Api().put("/api/user/" + this.props.id, {
-      body: JSON.stringify(formData)
-    }).then(c => {
-      if (c.ok) {
-        // for (const key in this.state) {
-        //   if (this.state.hasOwnProperty(key)) {
-        //     this.state[key] = "";
-        //   }
-        // }
-        this.props.update({ ...formData });
-      }
-    });
+    new Api()
+      .put("/api/user/" + this.props.id, {
+        body: JSON.stringify(formData)
+      })
+      .then(c => {
+        if (c.ok) {
+          // for (const key in this.state) {
+          //   if (this.state.hasOwnProperty(key)) {
+          //     this.state[key] = "";
+          //   }
+          // }
+          this.props.update({ ...formData });
+        }
+      });
   };
   componentDidMount() {
- new Api().get("api/user/" + this.props.id)
+    new Api()
+      .get("api/user/" + this.props.id)
       .then(c => c.json())
       .then(c => this.setState({ ...c }));
   }
-
+  onChangeDate = e => {
+    this.setState({ [e.target.name]: new Api().toMiladiDate(e.target.value) });
+  };
   render() {
     return (
       <div>
@@ -166,10 +171,10 @@ class UserEdit extends Component {
                 </Item>
                 <Item>
                   <TextField
-                    value={this.state.birthDate}
+                    value={new Api().toPersainDate(this.state.birthDate)}
                     name="birthDate"
                     label="تاریخ تولد"
-                    onChange={this.onChange}
+                    onChange={this.onChangeDate}
                   />
                 </Item>
                 <Item>

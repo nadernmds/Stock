@@ -8,6 +8,7 @@ class Table extends Component {
   };
   names = [];
   render() {
+    console.log(this.state);
     this.init();
     return (
       <div>
@@ -20,8 +21,14 @@ class Table extends Component {
                     <Box width={3 / 4}>
                       <TextField
                         autoComplete={false}
-                        value={this.state[c.name]}
-                        onChange={this.onChange}
+                        value={
+                          c.date == true
+                            ? new Api().toPersainDate(this.state[c.name])
+                            : this.state[c.name]
+                        }
+                        onChange={
+                          c.date == true ? this.onChangeDate : this.onChange
+                        }
                         fullWidth
                         label={c.persianName}
                         name={c.name}
@@ -68,12 +75,17 @@ class Table extends Component {
                       <Box width={3 / 4}>
                         <TextField
                           autoComplete={false}
-                          onChange={this.onChange}
+                          onChange={
+                            c.date == true ? this.onChangeDate : this.onChange
+                          }
                           fullWidth
                           label={c.persianName}
                           name={c.name}
-                          value={this.state.EditData[c.name]}
-                        />
+                          value={
+                            c.date == true
+                              ? new Api().toPersainDate(this.state.EditData[c.name])
+                              : this.state.EditData[c.name]
+                          }                        />
                       </Box>
                     </Grid>
                   ))}
@@ -108,6 +120,21 @@ class Table extends Component {
       </div>
     );
   }
+  onChangeDate = e => {
+    // this.setState({ [e.target.name]: new Api().toMiladiDate(e.target.value) });
+    if (this.state.EditMode) {
+      this.setState({
+        EditData: {
+          ...this.state.EditData,
+          [e.target.name]: new Api().toMiladiDate(e.target.value)
+        }
+      });
+    } else {
+      this.setState({
+        [e.target.name]: new Api().toMiladiDate(e.target.value)
+      });
+    }
+  };
   onChange = e => {
     if (this.state.EditMode) {
       this.setState({

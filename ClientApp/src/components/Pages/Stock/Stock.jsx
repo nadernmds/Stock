@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ApiTable from "../../Widgets/Table/ApiTable";
+import Table from "../../Widgets/Table/Table";
 class Stock extends Component {
   state = {
     columns: [
@@ -11,7 +12,12 @@ class Stock extends Component {
   render() {
     return (
       <div>
-        <ApiTable title="سهام " columns={this.state.columns} url="api/Stock/" />
+        <Table
+          title="سهام "
+          columns={this.state.columns}
+          url="api/Stock/"
+          primaryKey="stockId"
+        />
       </div>
     );
   }

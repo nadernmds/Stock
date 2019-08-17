@@ -46,7 +46,9 @@ class UserCreate extends Component {
         this.props.update({ ...c });
       });
   };
-
+  onChangeDate=e=>{
+    this.setState({ [e.target.name]:new Api().toMiladiDate( e.target.value) });
+  }
   render() {
     return (
       <div>
@@ -163,7 +165,7 @@ class UserCreate extends Component {
                   <TextField
                     name="birthDate"
                     label="تاریخ تولد"
-                    onChange={this.onChange}
+                    onChange={this.onChangeDate}
                   />
                 </Item>
                 <Item>

@@ -57,7 +57,6 @@ class BaseTable extends Component {
   //     }
   //   }
   // ];
-
   render() {
     return (
       <div>

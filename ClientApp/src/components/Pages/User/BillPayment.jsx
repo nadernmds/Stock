@@ -6,6 +6,7 @@ import Api from "../../../Api";
 class BillPayment extends Component {
   state = {};
   render() {
+    console.log(this.state);
     return (
       <FormDialog
         title="ثبت فیش"
@@ -30,7 +31,7 @@ class BillPayment extends Component {
                 type="text"
                 name="date"
                 label="تاریخ"
-                onChange={this.onChange}
+                onChange={this.onChangeDate}
               />
             </Item>
             <Item>
@@ -63,6 +64,9 @@ class BillPayment extends Component {
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  onChangeDate=e=>{
+    this.setState({ [e.target.name]:new Api().toMiladiDate( e.target.value) });
+  }
   onSubmit = () => {
     new Api()
       .post("api/payment", {
