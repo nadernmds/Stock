@@ -40,7 +40,9 @@ namespace Stock.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseLazyLoadingProxies(false)
-                    .UseSqlServer("Data Source=.;Initial Catalog=stock_db;Persist Security Info=True;User ID=sa;Password=1371");
+                                    // .UseSqlServer("Data Source=.;Initial Catalog=stock_db;Persist Security Info=True;User ID=sa;Password=1371");
+                                 .UseSqlServer("Data Source=185.165.116.34,1436;Initial Catalog=Stock;Persist Security Info=True;User ID=stock;Password=rzk123!@#");
+
             }
         }
 
